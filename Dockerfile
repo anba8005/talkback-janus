@@ -37,7 +37,6 @@ ARG JANUS_BUILD_DEPS_DEV="\
 	libconfig-dev \
 	gtk-doc-tools \
 	meson \
-	sudo \
 	"
 ARG JANUS_BUILD_DEPS_EXT="\
 	libavutil-dev \
@@ -60,7 +59,7 @@ RUN \
 	&& DEBIAN_FRONTEND=noninteractive apt-get update \
 	&& DEBIAN_FRONTEND=noninteractive apt-get -y install apt-utils \
 	&& DEBIAN_FRONTEND=noninteractive apt-get -y upgrade \
-	&& DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install $JANUS_BUILD_DEPS_DEV ${JANUS_BUILD_DEPS_EXT} ca-certificates \
+	&& DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install $JANUS_BUILD_DEPS_DEV ${JANUS_BUILD_DEPS_EXT} sudo ca-certificates \
 	# build libnice
 	&& git clone https://gitlab.freedesktop.org/libnice/libnice --depth 1 -b ${LIBNICE_VERSION} ${BUILD_SRC}/libnice \
 	&& cd ${BUILD_SRC}/libnice \
@@ -100,6 +99,7 @@ RUN \
 	libsrtp \
 	janus-gateway \
 	libnice \
+	usrsctp \
 	libwebsockets \
 	&& DEBIAN_FRONTEND=noninteractive apt-get -y --auto-remove purge ${JANUS_BUILD_DEPS_EXT} \
 	&& DEBIAN_FRONTEND=noninteractive apt-get -y clean \
