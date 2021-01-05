@@ -1,0 +1,346 @@
+# stream-name: {
+# type = rtp|live|ondemand|rtsp
+#        rtp = stream originated by an external tool (e.g., gstreamer or
+#              ffmpeg) and sent to the plugin via RTP
+#        live = local file streamed live to multiple listeners
+#               (multiple listeners = same streaming context)
+#        ondemand = local file streamed on-demand to a single listener
+#                   (multiple listeners = different streaming contexts)
+#        rtsp = stream originated by an external RTSP feed (only
+#               available if libcurl support was compiled)
+# id = <unique numeric ID> (if missing, a random one will be generated)
+# description = This is my awesome stream
+# is_private = true|false (private streams don't appear when you do a 'list'
+#			request)
+# secret = <optional password needed for manipulating (e.g., destroying
+#			or enabling/disabling) the stream>
+# pin = <optional password needed for watching the stream>
+# filename = path to the local file to stream (only for live/ondemand)
+# audio = true|false (do/don't stream audio)
+# video = true|false (do/don't stream video)
+#    The following options are only valid for the 'rtp' type:
+# data = true|false (do/don't stream text via datachannels)
+# audioport = local port for receiving audio frames
+# audiortcpport = local port, if any, for receiving and sending audio RTCP feedback
+# audiomcast = multicast group port for receiving audio frames, if any
+# audioiface = network interface or IP address to bind to, if any (binds to all otherwise)
+# audiopt = <audio RTP payload type> (e.g., 111)
+# audiortpmap = RTP map of the audio codec (e.g., opus/48000/2)
+# audioskew = true|false (whether the plugin should perform skew
+#		analisys and compensation on incoming audio RTP stream, EXPERIMENTAL)
+# videoport = local port for receiving video frames
+# videortcpport = local port, if any, for receiving and sending video RTCP feedback
+# videomcast = multicast group port for receiving video frames, if any
+# videoiface = network interface or IP address to bind to, if any (binds to all otherwise)
+# videopt = <video RTP payload type> (e.g., 100)
+# videortpmap = RTP map of the video codec (e.g., VP8/90000)
+# videobufferkf = true|false (whether the plugin should store the latest
+#		keyframe and send it immediately for new viewers, EXPERIMENTAL)
+# videosimulcast = true|false (do|don't enable video simulcasting)
+# videoport2 = second local port for receiving video frames (only for rtp, and simulcasting)
+# videoport3 = third local port for receiving video frames (only for rtp, and simulcasting)
+# videoskew = true|false (whether the plugin should perform skew
+#		analisys and compensation on incoming video RTP stream, EXPERIMENTAL)
+# videosvc = true|false (whether the video will have SVC support; works only for VP9-SVC, default=false)
+# collision = in case of collision (more than one SSRC hitting the same port), the plugin
+#		will discard incoming RTP packets with a new SSRC unless this many milliseconds
+#		passed, which would then change the current SSRC (0=disabled)
+# dataport = local port for receiving data messages to relay
+# dataiface = network interface or IP address to bind to, if any (binds to all otherwise)
+# datatype = text|binary (type of data this mountpoint will relay, default=text)
+# databuffermsg = true|false (whether the plugin should store the latest
+#		message and send it immediately for new viewers)
+# threads = number of threads to assist with the relaying part, which can help
+#		if you expect a lot of viewers that may cause the RTP receiving part
+#		in the Streaming plugin to slow down and fail to catch up (default=0)
+#
+# In case you want to use SRTP for your RTP-based mountpoint, you'll need
+# to configure the SRTP-related properties as well, namely the suite to
+# use for hashing (32 or 80) and the crypto information for decrypting
+# the stream (as a base64 encoded string the way SDES does it). Notice
+# that with SRTP involved you'll have to pay extra attention to what you
+# feed the mountpoint, as you may risk getting SRTP decrypt errors:
+# srtpsuite = 32
+# srtpcrypto = WbTBosdVUZqEb6Htqhn+m3z7wUh4RJVR8nE15GbN
+#
+# The following options are only valid for the 'rstp' type:
+# url = RTSP stream URL (only for restreaming RTSP)
+# rtsp_user = RTSP authorization username (only if type=rtsp)
+# rtsp_pwd = RTSP authorization password (only if type=rtsp)
+# rtspiface = network interface or IP address to bind to, if any (binds to all otherwise), when receiving RTSP streams
+# rtsp_failcheck = whether an error should be returned if connecting to the RTSP server fails (default=true)
+#
+# Notice that, for 'rtsp' mountpoints, normally the plugin uses the exact
+# SDP rtpmap and fmtp attributes the remote camera or RTSP server sent.
+# In case the values set remotely are known to conflict with WebRTC viewers,
+# you can override both using the settings introduced above.
+#
+# To test the 'gstreamer-sample' example, check the test_gstreamer.sh
+# script in the plugins/streams folder. The live and on-demand  audio
+# file streams, use a couple of files (radio.alaw, music.mulaw) that are
+# provided in the plugins/streams folder.
+#}
+
+general: {
+	#admin_key = "supersecret"		# If set, mountpoints can be created via API
+									# only if this key is provided in the request
+	rtp_port_range = "30000-31000"	# Range of ports to use for RTP/RTCP when '0' is
+									# passed as port for a mountpoint (default=10000-60000)
+	#events = false					# Whether events should be sent to event
+									# handlers (default=true)
+}
+
+webrtc1: {
+	type = "rtp"
+	id = 1
+	description = "WEBRTC-1"
+	video = true
+	audio = false
+	videoport = 10010
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc2: {
+	type = "rtp"
+	id = 2
+	description = "WEBRTC-2"
+	video = true
+	audio = false
+	videoport = 10020
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc3: {
+	type = "rtp"
+	id = 3
+	description = "WEBRTC-3"
+	video = true
+	audio = false
+	videoport = 10030
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc4: {
+	type = "rtp"
+	id = 4
+	description = "WEBRTC-4"
+	video = true
+	audio = false
+	videoport = 10040
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc5: {
+	type = "rtp"
+	id = 5
+	description = "WEBRTC-5"
+	video = true
+	audio = false
+	videoport = 10050
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc6: {
+	type = "rtp"
+	id = 6
+	description = "WEBRTC-6"
+	video = true
+	audio = false
+	videoport = 10060
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc7: {
+	type = "rtp"
+	id = 7
+	description = "WEBRTC-7"
+	video = true
+	audio = false
+	videoport = 10070
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc8: {
+	type = "rtp"
+	id = 8
+	description = "WEBRTC-8"
+	video = true
+	audio = false
+	videoport = 10080
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc9: {
+	type = "rtp"
+	id = 9
+	description = "WEBRTC-9"
+	video = true
+	audio = false
+	videoport = 10090
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc10: {
+	type = "rtp"
+	id = 10
+	description = "WEBRTC-10"
+	video = true
+	audio = false
+	videoport = 10100
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc11: {
+	type = "rtp"
+	id = 11
+	description = "WEBRTC-11"
+	video = true
+	audio = false
+	videoport = 10110
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc12: {
+	type = "rtp"
+	id = 12
+	description = "WEBRTC-12"
+	video = true
+	audio = false
+	videoport = 10120
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc13: {
+	type = "rtp"
+	id = 13
+	description = "WEBRTC-13"
+	video = true
+	audio = false
+	videoport = 10130
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc14: {
+	type = "rtp"
+	id = 14
+	description = "WEBRTC-14"
+	video = true
+	audio = false
+	videoport = 10140
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc15: {
+	type = "rtp"
+	id = 15
+	description = "WEBRTC-15"
+	video = true
+	audio = false
+	videoport = 10150
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc16: {
+	type = "rtp"
+	id = 16
+	description = "WEBRTC-16"
+	video = true
+	audio = false
+	videoport = 10160
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc17: {
+	type = "rtp"
+	id = 17
+	description = "WEBRTC-13"
+	video = true
+	audio = false
+	videoport = 10170
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc18: {
+	type = "rtp"
+	id = 18
+	description = "WEBRTC-18"
+	video = true
+	audio = false
+	videoport = 10180
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc19: {
+	type = "rtp"
+	id = 19
+	description = "WEBRTC-19"
+	video = true
+	audio = false
+	videoport = 10190
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+webrtc20: {
+	type = "rtp"
+	id = 20
+	description = "WEBRTC-20"
+	video = true
+	audio = false
+	videoport = 10200
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+}
+
+pgm: {
+	type = "rtp"
+	id = 100
+	description = "PGM"
+	video = true
+	audio = true
+	videoport = 11000
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+	audioport = 11002
+	audiopt = 111
+	audiortpmap = "opus/48000/2"
+}
