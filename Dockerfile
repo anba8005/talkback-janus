@@ -11,7 +11,6 @@ ARG JANUS_CONFIG_DEPS="\
 	--prefix=/opt/janus \
 	"
 ARG JANUS_CONFIG_OPTIONS="\
-	--disable-data-channels \
 	--disable-unix-sockets \
 	--disable-rabbitmq \
 	--disable-mqtt \
@@ -81,6 +80,12 @@ RUN \
 	&& ./configure --prefix=/usr --enable-openssl \
 	&& make shared_library \
 	&& make install \
+	# build usrsctp
+	&& git clone https://github.com/sctplab/usrsctp ${BUILD_SRC}/usrsctp \
+	&& cd ${BUILD_SRC}/usrsctp \
+	&& ./bootstrap \
+	&& ./configure --prefix=/usr --disable-programs --disable-inet --disable-inet6 \
+	&& make && sudo make install \
 	# build janus
 	&& git clone https://github.com/meetecho/janus-gateway.git --depth 1 -b ${JANUS_VERSION} ${BUILD_SRC}/janus-gateway \
 	&& cd ${BUILD_SRC}/janus-gateway \

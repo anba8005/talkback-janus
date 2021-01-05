@@ -1,1 +1,1 @@
-docker build -t gyvaitv-janus-image-linux ..
+docker build -t talkback-janus-image-linux ..

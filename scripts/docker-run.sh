@@ -1,1 +1,1 @@
-docker run --name gyvaitv-janus --network=host --rm -it gyvaitv-janus-image-linux:latest "$@"
+docker run -d --name talkback-janus --network=host --rm -it talkback-janus-image-linux:latest "$@"
