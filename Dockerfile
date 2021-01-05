@@ -114,4 +114,5 @@ RUN rm -r /opt/janus/etc/janus/
 COPY janus/conf /opt/janus/etc/janus/
 RUN chown janus.janus -R /opt/janus/etc/
 
+
 ENTRYPOINT ["/opt/janus/bin/janus"]
