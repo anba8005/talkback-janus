@@ -105,5 +105,5 @@ room-1: {
 	audiopt = 111
 	audiortpmap = "opus/48000/2"
 	dataport = 10014
-	databuffermsg = false
+	databuffermsg = true
 }
