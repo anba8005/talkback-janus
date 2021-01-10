@@ -47,6 +47,34 @@ general: {
 	#string_ids = true
 }
 
-room-10: {
+room-1: {
+	sampling_rate = 48000
+}
+
+room-2: {
+	sampling_rate = 48000
+}
+
+room-3: {
+	sampling_rate = 48000
+}
+
+room-4: {
+	sampling_rate = 48000
+}
+
+room-5: {
+	sampling_rate = 48000
+}
+
+room-6: {
+	sampling_rate = 48000
+}
+
+room-7: {
+	sampling_rate = 48000
+}
+
+room-8: {
 	sampling_rate = 48000
 }
