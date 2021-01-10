@@ -78,3 +78,11 @@ room-7: {
 room-8: {
 	sampling_rate = 48000
 }
+
+room-9: {
+	sampling_rate = 48000
+}
+
+room-10: {
+	sampling_rate = 48000
+}
