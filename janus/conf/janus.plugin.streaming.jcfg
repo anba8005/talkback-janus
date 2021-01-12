@@ -93,21 +93,6 @@ general: {
 room-1: {
 	type = "rtp"
 	id = 1
-	description = "PGM VP9"
-	video = true
-	audio = true
-	videoport = 10010
-	videopt = 101
-	videortpmap = "VP9/90000"
-	audioport = 10012
-	audiopt = 111
-	audiortpmap = "opus/48000/2"
-	data = false
-}
-
-room-2: {
-	type = "rtp"
-	id = 2
 	description = "PGM H264"
 	video = true
 	audio = true
