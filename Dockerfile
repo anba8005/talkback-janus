@@ -115,5 +115,8 @@ COPY janus/conf /opt/janus/etc/janus/
 COPY janus/certs /opt/janus/etc/janus/
 RUN chown janus.janus -R /opt/janus/etc/
 
+EXPOSE 8188 8989
+EXPOSE 10000/udp 10010/udp 10012/udp
+EXPOSE 54000-55000/udp
 
-ENTRYPOINT ["/opt/janus/bin/janus"]
+CMD /opt/janus/bin/janus
