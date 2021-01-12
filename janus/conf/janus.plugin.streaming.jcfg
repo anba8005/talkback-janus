@@ -96,11 +96,11 @@ room-1: {
 	description = "PGM H264"
 	video = true
 	audio = true
-	videoport = 10020
+	videoport = 10010
 	videopt = 126
 	videortpmap = "H264/90000"
 	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
-	audioport = 10022
+	audioport = 10012
 	audiopt = 111
 	audiortpmap = "opus/48000/2"
 	data = false
