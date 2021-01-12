@@ -86,34 +86,45 @@ general: {
 									# only if this key is provided in the request
 	#rtp_port_range = "30000-31000"	# Range of ports to use for RTP/RTCP when '0' is
 									# passed as port for a mountpoint (default=10000-60000)
-	#events = false					# Whether events should be sent to event
+	events = false					# Whether events should be sent to event
 									# handlers (default=true)
 }
 
 room-1: {
 	type = "rtp"
 	id = 1
-	description = "PGM"
+	description = "PGM VP9"
 	video = true
 	audio = true
 	videoport = 10010
 	videopt = 101
 	videortpmap = "VP9/90000"
-#	videopt = 126
-#	videortpmap = "H264/90000"
-#	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
 	audioport = 10012
 	audiopt = 111
 	audiortpmap = "opus/48000/2"
-	data = true
-	dataport = 10014
-	databuffermsg = true
+	data = false
+}
+
+room-2: {
+	type = "rtp"
+	id = 2
+	description = "PGM H264"
+	video = true
+	audio = true
+	videoport = 10020
+	videopt = 126
+	videortpmap = "H264/90000"
+	videofmtp = "profile-level-id=42e01f;packetization-mode=1"
+	audioport = 10022
+	audiopt = 111
+	audiortpmap = "opus/48000/2"
+	data = false
 }
 
 room-100: {
 	type = "rtp"
 	id = 100
-	description = "Tally"
+	description = "Tally Data"
 	video = false
 	audio = false
 	data = true
