@@ -174,8 +174,8 @@ media: {
 # be used for gathering candidates, and enable or disable the
 # internal libnice debugging, if needed.
 nat: {
-	#stun_server = "stun.l.google.com"
-	#stun_port = 19302
+	stun_server = "stun.l.google.com"
+	stun_port = 19302
 	nice_debug = false
 	#full_trickle = true
 	#ice_lite = true
@@ -195,11 +195,11 @@ nat: {
 	# statically configured TURN server, and thus provide the address of the
 	# TURN server, the transport (udp/tcp/tls) to use, and a set of valid
 	# credentials to authenticate...
-	# turn_server = "your.turn.server"
-	# turn_port = 3478
-	# turn_type = "udp"
-	# turn_user = "user"
-	# turn_pwd = "password"
+	turn_server = "turn.b3video.lt"
+	turn_port = 3478
+	turn_type = "udp"
+	turn_user = "turn"
+	turn_pwd = "turn"
 
 	# ... or you can make use of the TURN REST API to get info on one or more
 	# TURN services dynamically. This makes use of the proposed standard of
